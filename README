@@ -1,11 +1,11 @@
-# CAS Restful API µƒPHP µœ÷
+# CAS Restful API ÁöÑPHPÂÆûÁé∞
 
 * CAS RESTful API:
 
 > https://wiki.jasig.org/display/casum/restful+api
 
 
-* Tomcat 9.0\webapps\cas\WEB-INF\web.xml÷–ÃÌº”
+* Tomcat 9.0\webapps\cas\WEB-INF\web.xml‰∏≠Ê∑ªÂä†
 
 ```xml
 <servlet>
