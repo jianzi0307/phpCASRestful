@@ -14,13 +14,14 @@ $http = new Client();
 $host = 'http://127.0.0.1:8080';
 $data = array(
     'service' => 'http://baidu.com', //Service
-    'ticket' => 'ST-25-a7P09XWcwfJhsDZcx4U7-cas.t.com' //ST-Ticket
+    'ticket' => 'ST-31-eygQrqfyRdOQJ1MYTzSf-cas.t.com' //ST-Ticket
 );
-$response = $http->post($host . '/cas/serviceValidate', $data);
+$queryStr = http_build_query($data);
+$response = $http->get($host . '/cas/serviceValidate?' . $queryStr);
 
-var_dump($response->body);
-var_dump($response->status); 
-var_dump($response->getHeader());
+//var_dump($response->body);
+//var_dump($response->status); 
+//var_dump($response->getHeader());
 
 
 /**
@@ -38,10 +39,19 @@ var_dump($response->getHeader());
 */
 if (!$response->hasError()) {
    if ($response->status == 200) {
-      echo $response->body;
+		$validateXML = simplexml_load_string($response->body, null, 0, 'cas', true);
+		//var_dump(property_exists($validateXML, 'authenticationSuccess'));
+		//var_dump(property_exists($validateXML, 'authenticationFailure'));die;
+		if (property_exists($validateXML, 'authenticationSuccess')) {
+			$user = $validateXML->authenticationSuccess[0];
+			echo $user;
+		} else {
+			echo trim($validateXML->authenticationFailure[0]);
+		}
    } else {
 		//var_dump($response->body);
 		//var_dump($response->status); 
 		//var_dump($response->getHeader());
+   		echo "error.";
    }
 }
